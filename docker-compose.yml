@@ -1,0 +1,107 @@
+version: "3"
+services:
+  
+  namenode:  # Master node
+    restart: always
+    build: ./namenode
+    image: namenode
+    container_name: namenode
+    hostname: namenode
+    networks:
+      - hadoop_net
+    expose:
+      - "8020"
+      - "9870"
+    ports:
+      - 9870:9870 # Hadoop UI.
+      - 8020:8020
+    volumes:
+      - ./namenode/sync_data:/sync_data
+
+  datanode: # Slave node
+    restart: always
+    build: ./datanode
+    image: datanode
+    container_name: datanode
+    hostname: datanode
+    networks:
+      - hadoop_net
+    depends_on:
+      - namenode
+    expose:
+      - "9864"
+    ports:
+      - 9864:9864 # Individual datanode access.
+
+  resourcemanager: # YARN
+    restart: always
+    build: ./resourcemanager
+    image: resourcemanager
+    container_name: resourcemanager
+    hostname: resourcemanager
+    networks:
+      - hadoop_net
+    depends_on:
+      - namenode
+    expose:
+      - "8088"
+      - "8032"
+      - "8031"
+      - "8030"
+    ports:
+      - 8088:8088 # YARN Resource Manager.
+
+  nodemanager:  # No se bien para que es esto
+    restart: always
+    build: ./nodemanager
+    image: nodemanager
+    container_name: nodemanager
+    hostname: nodemanager
+    networks:
+      - hadoop_net
+    depends_on:
+      - namenode
+    expose:
+      - "8042"
+    ports:
+      - 8042:8042
+
+  spark-master: # Cliente spark
+    restart: always
+    build: ./spark-master
+    image: spark-master
+    container_name: spark-master
+    networks:
+      - hadoop_net
+    expose:
+      - "8080"
+      - "7077"
+      - "6066"
+    ports:
+      - 8080:8080
+      - 7077:7077
+      - 6066:6066
+    volumes:
+      - ./spark-master/notebooks:/notebooks
+    depends_on:
+      - namenode
+      - datanode
+      - resourcemanager
+
+  spark-worker:
+    restart: always
+    build: ./spark-worker
+    image: spark-worker
+    container_name: spark-worker
+    hostname: spark-worker
+    networks:
+      - hadoop_net
+    expose:
+      - "8081"
+    ports:
+      - 8081:8081
+    depends_on:
+      - spark-master
+
+networks:
+  hadoop_net:
