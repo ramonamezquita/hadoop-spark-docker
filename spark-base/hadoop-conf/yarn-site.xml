@@ -22,4 +22,8 @@
     <name>yarn.resourcemanager.hostname</name>
     <value>resourcemanager</value>
   </property>    
+  <property>
+    <name>yarn.resourcemanager.webapp.ui-actions.enabled</name>
+    <value>true</value>
+  </property>
 </configuration>

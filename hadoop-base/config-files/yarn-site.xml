@@ -25,4 +25,5 @@
   <property>
     <name>yarn.resourcemanager.webapp.ui-actions.enabled</name>
     <value>true</value>
+  </property>
 </configuration>

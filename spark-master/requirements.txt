@@ -1,0 +1,14 @@
+# Packages already install with pip in Dockerfile:
+# - six 
+# - pytest 
+# - numpy 
+# - cython
+# - pandas
+# - jupyter 
+# - jupyterlab
+# - setuptools
+# - wheel
+# - pyarrow
+
+psycopg2==2.9.3
+SQLAlchemy==1.4.37

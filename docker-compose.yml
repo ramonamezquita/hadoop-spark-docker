@@ -1,7 +1,7 @@
 version: "3"
 services:
   
-  namenode:  # Master node
+  namenode:  
     restart: always
     build: ./namenode
     image: namenode
@@ -18,7 +18,7 @@ services:
     volumes:
       - ./namenode/sync_data:/sync_data
 
-  datanode: # Slave node
+  datanode: 
     restart: always
     build: ./datanode
     image: datanode
@@ -33,7 +33,7 @@ services:
     ports:
       - 9864:9864 # Individual datanode access.
 
-  resourcemanager: # YARN
+  resourcemanager:
     restart: always
     build: ./resourcemanager
     image: resourcemanager
@@ -66,7 +66,7 @@ services:
     ports:
       - 8042:8042
 
-  spark-master: # Cliente spark
+  spark-master:
     restart: always
     build: ./spark-master
     image: spark-master
@@ -105,3 +105,4 @@ services:
 
 networks:
   hadoop_net:
+    driver: bridge
