@@ -5,7 +5,7 @@ ENV INIT_DAEMON_BASE_URI http://identifier/init-daemon
 ENV INIT_DAEMON_STEP spark_master_init
 
 ENV BASE_URL=https://dlcdn.apache.org/spark/
-ENV SPARK_VERSION=3.2.1
+ENV SPARK_VERSION=3.2.2
 ENV HADOOP_VERSION=3.2
 ENV SPARK_HOME=/spark
 ENV HADOOP_CONF_DIR=/hadoop/conf
@@ -22,7 +22,7 @@ RUN apk add --no-cache curl bash openjdk8-jre python3 py-pip nss libc6-compat co
 
 # Make Spark available from any Python shell.
 ENV PYTHONPATH="${SPARK_HOME}/python:${PYTHONPATH}"
-ENV PYTHONPATH="${SPARK_HOME}/python/lib/py4j-0.10.9.3-src.zip:${PYTHONPATH}"
+ENV PYTHONPATH="${SPARK_HOME}/python/lib/py4j-0.10.9.5-src.zip:${PYTHONPATH}"
 
 # Fix the value of PYTHONHASHSEED
 # Note: this is needed when you use Python 3.3 or greater

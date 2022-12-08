@@ -49,9 +49,9 @@ services:
       - "8031"
       - "8030"
     ports:
-      - 8088:8088 # YARN Resource Manager.
+      - 8088:8088 # YARN Web UI.
 
-  nodemanager:  # No se bien para que es esto
+  nodemanager:  
     restart: always
     build: ./nodemanager
     image: nodemanager
@@ -64,7 +64,7 @@ services:
     expose:
       - "8042"
     ports:
-      - 8042:8042
+      - 8042:8042  # NodeManager Web UI
 
   spark-master:
     restart: always
@@ -76,11 +76,17 @@ services:
     expose:
       - "8080"
       - "7077"
-      - "6066"
+      
+      # Use this port for launching JupyterLab with the following command:
+      # jupyter lab --ip=0.0.0.0 --port=6066
+      - "6066"  
+      
+      - "4040"
     ports:
       - 8080:8080
       - 7077:7077
       - 6066:6066
+      - 4040:4040
     volumes:
       - ./spark-master/notebooks:/notebooks
     depends_on:
